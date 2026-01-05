@@ -76,41 +76,41 @@
 ```bash
 git clone https://github.com/<ваш_логин>/Credit_scoring_1.git
 cd Credit_scoring_1
-``
+```
 
-2. Создание и активация виртуального окружения (рекомендуется через conda)
+### 2. Создание и активация виртуального окружения (рекомендуется через conda)
 ```bash
 conda create -n credit-scoring python=3.11
 conda activate credit-scoring
 ```
 
-3. Установка зависимостей
+### 3. Установка зависимостей
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Инициализация DVC (если ещё не инициализирован в репозитории)
+### 4. Инициализация DVC (если ещё не инициализирован в репозитории)
 ```bash
 dvc init
 ```
-5. Запуск DVC пайплайна
+### 5. Запуск DVC пайплайна
 ```bash
 dvc repro
 ```
-6. Запуск тестов
+### 6. Запуск тестов
 ```bash
 pytest tests/ -v
 ```
-7. Сборка и запуск Docker-образа API
+### 7. Сборка и запуск Docker-образа API
 ```bash
 docker build -t credit-scoring-api:latest .
 docker run -p 8000:8000 credit-scoring-api:latest
 ```
-8. Запуск скрипта мониторинга дрифта
+### 8. Запуск скрипта мониторинга дрифта
 ```bash
 python scripts/monitor_drift.py
 ```
-9. Запуск MLflow UI
+### 9. Запуск MLflow UI
 ```bash
 mlflow ui
 ```
