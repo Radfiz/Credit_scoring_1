@@ -1,5 +1,8 @@
+# src/data/make_dataset.py
+
 import pandas as pd
 import os
+from sklearn.model_selection import train_test_split
 
 def load_and_split_data():
     """Загружает данные и разделяет их на тренировочную и тестовую выборки."""
@@ -7,12 +10,12 @@ def load_and_split_data():
     df = pd.read_csv(data_path)
 
     # Разделение данных
-    from sklearn.model_selection import train_test_split
     X = df.drop(columns=["default.payment.next.month"])
     y = df["default.payment.next.month"]
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
     # Сохраняем
+    os.makedirs("data/processed", exist_ok=True)
     train_path = os.path.join("data", "processed", "train.csv")
     test_path = os.path.join("data", "processed", "test.csv")
 

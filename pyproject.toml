@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "credit-scoring-model"
 version = "0.1.0"
 authors = [
-  {name = "Your Name", email = "your.email@example.com"},
+  {name = "Chunarev_DD", email = "email@example.com"},
 ]
 description = "Credit scoring model for default prediction"
 readme = "README.md"
@@ -20,8 +20,12 @@ classifiers = [
 [project.optional-dependencies]
 dev = ["pytest", "flake8", "black", "isort"]
 
+# [tool.setuptools.packages.find]
+# where = ["src"] # Закомментировано
+
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["."] # Ищем пакеты в корне проекта
+include = ["src*"] # Включаем папку src как пакет и всё внутри
 
 [tool.black]
 line-length = 88

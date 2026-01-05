@@ -3,6 +3,7 @@
 import pandas as pd
 import great_expectations as ge
 from great_expectations.data_context import DataContext
+from great_expectations.core.batch import RuntimeBatchRequest
 
 def run_validation():
     """Загружает train.csv и запускает валидацию с помощью GE."""
@@ -17,29 +18,19 @@ def run_validation():
     suite = context.get_expectation_suite(suite_name)
 
     # --- ИСПРАВЛЕНИЕ СОЗДАНИЯ VALIDATOR ---
-    # Создание batch из DataFrame
-    batch = ge.from_pandas(df)
+    # Создание RuntimeBatchRequest для DataFrame
+    # Используем имя datasource и data_connector из great_expectations.yml
+    batch_request = RuntimeBatchRequest(
+        datasource_name="my_datasource", # Имя из great_expectations.yml
+        data_connector_name="default_runtime_data_connector_name", # Имя из great_expectations.yml
+        data_asset_name="my_runtime_asset_name", # Имя ассета из great_expectations.yml
+        runtime_parameters={"batch_data": df}, # Передаем сам DataFrame
+        batch_identifiers={"runtime_batch_identifier_name": "validation_batch"} # batch_identifiers из ассета
+    )
 
-    # Создание валидатора через контекст
-    # Этот способ может потребовать настройки datasource в great_expectations.yml
-    # datasource_name = "__not_used__"
-    # data_connector_name = "__not_used__"
-    # data_asset_name = "__not_used__"
-    # batch_request = ge.core.batch.BatchRequest(
-    #     datasource_name=datasource_name,
-    #     data_connector_name=data_connector_name,
-    #     data_asset_name=data_asset_name,
-    #     runtime_parameters={"batch_data": df},
-    #     data_connector_query=None,
-    # )
-    # validator = context.get_validator(
-    #     batch_request=batch_request,
-    #     expectation_suite_name=suite_name,
-    # )
-
-    # Альтернативный способ через get_validator с batch_list
+    # Создание валидатора через контекст с RuntimeBatchRequest
     validator = context.get_validator(
-        batch_list=[batch],
+        batch_request=batch_request,
         expectation_suite=suite
     )
     # --- КОНЕЦ ИСПРАВЛЕНИЯ ---

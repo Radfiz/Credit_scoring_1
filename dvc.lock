@@ -1,0 +1,49 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/data/make_dataset.py
+    deps:
+    - path: data/raw/UCI_Credit_Card.csv
+      md5: 940b416bb13a9b24bb5c9e1589284005
+      size: 2862995
+    - path: src/data/make_dataset.py
+      md5: 97e929435e0b352923769102f8c1640b
+      size: 1159
+    outs:
+    - path: data/processed/test.csv
+      md5: 5e2a96285ab6d4fc5fb2e1805c7f2275
+      size: 735859
+    - path: data/processed/train.csv
+      md5: 2862c2c09b57f49e5a92f2b1d5fe9d69
+      size: 2941568
+  validate:
+    cmd: python src/data/run_validation.py
+    deps:
+    - path: data/processed/train.csv
+      md5: 2862c2c09b57f49e5a92f2b1d5fe9d69
+      size: 2941568
+    - path: great_expectations/expectations/credit_data_suite.json
+      md5: 2e93e00ecaf09d4867459b062b331694
+      size: 1774
+    - path: src/data/run_validation.py
+      md5: 9eaf17538a716cb2d1c0d99cf2daca58
+      size: 2227
+  train:
+    cmd: python src/models/train.py
+    deps:
+    - path: data/processed/train.csv
+      md5: 2862c2c09b57f49e5a92f2b1d5fe9d69
+      size: 2941568
+    - path: src/models/pipeline.py
+      md5: 2c8deee017a1df585c4b86ff3dd586d1
+      size: 2841
+    - path: src/models/train.py
+      md5: 6e8e096a2b2703f10356a19c962afc3a
+      size: 6822
+    outs:
+    - path: metrics.json
+      md5: 6a6a398f61ceebf2553886ba2995728f
+      size: 133
+    - path: models/credit_default_model.pkl
+      md5: 78f84e52737e8d22bf389686e285fd42
+      size: 181707

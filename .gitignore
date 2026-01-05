@@ -1,0 +1,73 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Data and models
+data/processed/
+data/raw/
+models/
+mlflow.db
+mlruns/
+metrics.json
+roc_curve.png
+
+# DVC
+.dvc/tmp
+.dvc/cache
+
+# Great Expectations - исключаем локальные файлы
+great_expectations/uncommitted/
+great_expectations/plugins/
+great_expectations/profilers/
+great_expectations/*.ipynb
+great_expectations/notebooks/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs и временные файлы
+*.log
+*.sqlite3
+*.db
+*.pkl
+*.pickle
